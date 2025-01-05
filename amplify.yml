@@ -1,0 +1,29 @@
+version: 1
+env:
+  variables:
+    # Application versions
+    GO_VERSION: 1.23.4
+    HUGO_VERSION: 0.140.3
+    # Time zone
+    TZ: America/Los_Angeles
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Installing Hugo Extended..."
+        - wget https://github.com/gohugoio/hugo/releases/download/v0.120.4/hugo_extended_0.120.4_Linux-64bit.tar.gz
+        - tar -xvzf hugo_extended_0.120.4_Linux-64bit.tar.gz
+        - mv hugo /usr/local/bin/
+    build:
+      commands:
+        - echo "Starting Hugo build..."
+        - hugo --minify
+  artifacts:
+    baseDirectory: public
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - public/**/*
